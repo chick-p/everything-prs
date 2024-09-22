@@ -1,0 +1,140 @@
+:root {
+  --color-black: #003;
+  --color-white: #f9fafb;
+  --color-gray: #ccc;
+  --color-blue: #3b82f6;
+  --color-light-coral: #feebeb;
+  --color-coral: #fc8281;
+  --color-dark-coral: #c53130;
+  --color-light-teal: #daeeed;
+  --color-teal: #6dbeb7;
+  --color-dark-teal: #0d9488;
+}
+
+html {
+  font-size: 100%;
+  background-color: var(--color-white);
+  color: var(--color-black);
+  font-family: Roboto, "Helvetica Neue", "Noto Sans JP",
+    "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+}
+body {
+  padding: 1rem;
+}
+
+h1 {
+  font-size: 1.5rem;
+  font-weight: 900;
+}
+
+h2 {
+  font-size: 1.25rem;
+}
+
+ul {
+  padding: 0 0 0 1.75rem;
+}
+
+label {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  margin: 0 0 0.25rem;
+}
+
+main {
+  padding: 1rem;
+}
+
+main * + * {
+  margin: 1.5rem 0 0;
+}
+
+input[type="text"] {
+  display: block;
+  width: 100%;
+  padding: 0.625rem;
+  background-color: var(--color-white);
+  border: 2px solid var(--color-gray);
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+a {
+  color: var(--color-blue);
+  text-decoration: underline;
+}
+button {
+  padding: 0.625rem 1.25rem;
+  margin: 0 0.75rem 0.25rem 0;
+  color: var(--color-white);
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  background-color: var(--color-dark-teal);
+  border: 0;
+  border-radius: 0.5rem;
+}
+
+button:hover {
+  background-color: var(--color-dark-teal);
+  filter: brightness(1.25);
+}
+
+.no-margin-top {
+  margin-top: 0.5rem;
+}
+
+.c-header {
+  display: flex;
+  justify-content: flex-start;
+  padding: 1rem;
+  background-color: var(--color-light-teal);
+}
+
+.c-header-title__link {
+  color: var(--color-black);
+  text-decoration: none;
+}
+
+.c-header-list {
+  display: flex;
+  gap: 0 0.5rem;
+  margin-left: auto;
+}
+
+.c-header-list li {
+  list-style: none;
+  margin-top: 0;
+}
+
+.c-preference-label {
+  display: block;
+}
+
+.c-repos-list {
+  padding: 0;
+}
+
+.c-repos-list__item {
+  list-style: none;
+  margin-top: 0.5rem;
+}
+
+.c-repos-list__item input {
+  margin-top: 0.5rem;
+}
+
+.c-home-link {
+  display: block;
+  margin-top: 1.5rem;
+}
+
+.js-hidden {
+  display: none;
+}
+
+.js-save-message {
+  font-size: 0.875rem;
+  color: "var(--color-dark-teal)";
+}

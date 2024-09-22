@@ -5,10 +5,12 @@
     "deploy": "wrangler deploy --minify"
   },
   "dependencies": {
+    "@octokit/rest": "^21.0.2",
     "hono": "^4.6.1"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240529.0",
+    "@octokit/types": "^13.5.0",
     "wrangler": "^3.57.2"
   }
 }
