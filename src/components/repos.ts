@@ -41,13 +41,11 @@ export const repositoryHtml = async (props: { token: string }) => {
   const results = await client.getAllRepos();
 
   const repos = results.sort((a, b) => {
-    if (a.owner < b.owner) {
-      return -1;
+    const owner = a.owner.localeCompare(b.owner);
+    if (owner === 0) {
+      return a.name.localeCompare(b.name);
     }
-    if (a.owner > b.owner) {
-      return 1;
-    }
-    return 0;
+    return owner;
   });
 
   const repository = repos.map((repo) => {
