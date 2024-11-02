@@ -15,7 +15,7 @@ const list = (props: { name: string; prs: Array<PR> }) => html`
     <div>${props.name}</div>
     <ul>
       ${props.prs.map(
-        (pr) => html`<li><a href="${pr.html_url}">${pr.title}</a></li>`
+        (pr) => html`<li><a href="${pr.html_url}">${pr.title}</a></li>`,
       )}
     </ul>
   </div>
@@ -34,8 +34,8 @@ export const PullRequestHtml = async (props: {
   }
 
   const repos = Object.entries(props.repos)
-    .filter(([_, value]) => value)
-    .map(([key, _]) => key);
+    .filter(([, value]) => value)
+    .map(([key]) => key);
   console.log(repos);
 
   const client = new GitHub({ token });
@@ -62,7 +62,7 @@ export const PullRequestHtml = async (props: {
   }
 
   let allContent: Array<HtmlEscapedString> = [];
-  for (let [key, value] of Object.entries(allPrs)) {
+  for (const [key, value] of Object.entries(allPrs)) {
     if (value.length > 0) {
       const content = await list({ name: key, prs: value });
       allContent = [...allContent, content];

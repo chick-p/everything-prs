@@ -5,7 +5,7 @@
     const localStorageKey = "everything-prs";
     const localStorageValue = localStorage.getItem(localStorageKey) || "{}";
     const settings = JSON.parse(localStorageValue);
-    ghTokenInput?.setAttribute("value", settings["gh-token"] || "" );
+    ghTokenInput?.setAttribute("value", settings["gh-token"] || "");
 
     const saveButton = document.querySelector(".js-save");
     saveButton.addEventListener("click", (_) => {
@@ -13,7 +13,7 @@
 
       const newSettings = {
         ...settings,
-        "repos": [],
+        repos: [],
         "gh-token": apiKey,
       };
       localStorage.setItem(localStorageKey, JSON.stringify(newSettings));
