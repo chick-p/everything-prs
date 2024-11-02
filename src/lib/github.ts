@@ -42,7 +42,7 @@ export class GitHub {
   }
 
   async fetchReposRecursive(params: {
-    results: any[];
+    results: Repository[];
     page: number;
   }): Promise<Array<Repository>> {
     const { results, page } = params;
@@ -69,6 +69,8 @@ export class GitHub {
       });
       const data = resp.data;
       return data;
-    } catch (error) {}
+    } catch (error) {
+      console.error(error);
+    }
   }
 }

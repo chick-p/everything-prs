@@ -6,7 +6,11 @@ type Props = {
 export const Header: FC<Props> = (props: Props) => {
   return (
     <header class="c-header">
-      <h1><a href="/"  class="c-header-title__link">{props.title}</a></h1>
+      <h1>
+        <a href="/" class="c-header-title__link">
+          {props.title}
+        </a>
+      </h1>
       <ul class="c-header-list">
         <li>
           <a href="/repos">Repository</a>
