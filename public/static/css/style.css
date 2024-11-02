@@ -131,6 +131,13 @@ button:hover {
   margin-top: 1.5rem;
 }
 
+.c-sticky-bottom-menu {
+  background-color: var(--color-white);
+  bottom: 0;
+  padding: 0.75rem 0;
+  position: sticky;
+}
+
 .js-hidden {
   display: none;
 }
