@@ -11,6 +11,7 @@
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20240529.0",
     "@octokit/types": "^13.5.0",
+    "eslint": "^9.14.0",
     "wrangler": "^3.57.2"
   }
 }
