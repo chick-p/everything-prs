@@ -27,7 +27,7 @@ const content = (props: { repository: Array<Repository> }) => html`
         ${props.repository.map((repo) => repoItem({ repo }))}
       </ul>
     </div>
-    <div>
+    <div class="c-sticky-bottom-menu">
       <button class="js-save">Save</button>
       <span class="js-hidden js-save-message">Saved!</span>
     </div>
