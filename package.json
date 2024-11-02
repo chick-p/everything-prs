@@ -2,7 +2,13 @@
   "name": "everything-prs",
   "scripts": {
     "dev": "wrangler dev",
-    "deploy": "wrangler deploy --minify"
+    "deploy": "wrangler deploy --minify",
+    "lint": "run-p lint:*",
+    "lint:prettier": "prettier --check .",
+    "lint:eslint": "eslint \"./src/**/*.ts\"",
+    "fix": "run-s fix:*",
+    "fix:prettier": "prettier -w .",
+    "fix:eslint": "pnpm run lint:eslint --fix"
   },
   "dependencies": {
     "@octokit/rest": "^21.0.2",
