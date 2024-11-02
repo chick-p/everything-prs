@@ -2,31 +2,33 @@ import { html } from "hono/html";
 
 import { GitHub } from "../lib/github";
 
-type Repository = {
-  owner: string;
-  repoName: string;
+type Owner = {
+  name: string;
+  repos: Array<string>;
 };
 
-const repoItem = (props: { repo: Repository }) => {
-  const label = `${props.repo.owner}/${props.repo.repoName}`;
+const repoItem = (props: { repo: string }) => {
   return html` <li class="c-repos-list__item">
     <input
       type="checkbox"
-      id="${label}"
-      name="${label}"
+      id="${props.repo}"
+      name="${props.repo}"
       class="js_repository_checkbox"
     />
-    <label for="${label}">${label}</label>
+    <label for="${props.repo}">${props.repo}</label>
   </li>`;
 };
 
-const content = (props: { repository: Array<Repository> }) => html`
+const content = (props: { repository: Array<Owner> }) => html`
   <div>
-    <div>
-      <ul class="c-repos-list">
-        ${props.repository.map((repo) => repoItem({ repo }))}
-      </ul>
-    </div>
+    ${props.repository.map((owner) => {
+      return html`<fieldset>
+        <legend>${owner.name}</legend>
+        <ul class="c-repos-list">
+          ${owner.repos.map((repo) => repoItem({ repo }))}
+        </ul>
+      </fieldset>`;
+    })}
     <div class="c-sticky-bottom-menu">
       <button class="js-save">Save</button>
       <span class="js-hidden js-save-message">Saved!</span>
@@ -34,26 +36,33 @@ const content = (props: { repository: Array<Repository> }) => html`
   </div>
 `;
 
+const findOwner = (owner: string, tree: Array<Owner>) =>
+  tree.find((item) => item.name === owner);
+
 export const repositoryHtml = async (props: { token: string }) => {
   const token = props.token;
 
   const client = new GitHub({ token });
   const results = await client.getAllRepos();
 
-  const repos = results.sort((a, b) => {
-    const owner = a.owner.localeCompare(b.owner);
-    if (owner === 0) {
-      return a.name.localeCompare(b.name);
+  const tree = results.reduce((acc: Array<Owner>, repo) => {
+    const owner = findOwner(repo.owner, acc);
+    const fullname = `${repo.owner}/${repo.name}`;
+    if (!owner) {
+      acc = acc.concat({
+        name: repo.owner,
+        repos: [fullname],
+      });
+      return acc;
     }
+    owner.repos = owner.repos.concat(fullname);
+    return acc;
+  }, []);
+
+  const repos = tree.map((owner) => {
+    owner.repos.sort();
     return owner;
   });
 
-  const repository = repos.map((repo) => {
-    return {
-      owner: repo.owner,
-      repoName: repo.name,
-    };
-  });
-
-  return content({ repository });
+  return content({ repository: repos });
 };
