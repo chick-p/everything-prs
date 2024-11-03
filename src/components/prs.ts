@@ -8,14 +8,26 @@ type PR = {
   repo: string;
   title: string;
   html_url: string;
+  user: {
+    avatar_url: string;
+    login?: string;
+  };
 };
 
 const list = (props: { name: string; prs: Array<PR> }) => html`
   <div>
-    <div>${props.name}</div>
-    <ul>
+    <div class="c-prs-label">${props.name}</div>
+    <ul class="c-prs-list">
       ${props.prs.map(
-        (pr) => html`<li><a href="${pr.html_url}">${pr.title}</a></li>`,
+        (pr) =>
+          html`<li>
+            <img
+              class="c-prs-list____item-avator-icon"
+              src="${pr.user.avatar_url}"
+              alt="${pr.user.login}"
+            />
+            <a href="${pr.html_url}">${pr.title}</a>
+          </li>`,
       )}
     </ul>
   </div>
@@ -52,6 +64,10 @@ export const PullRequestHtml = async (props: {
         repo: repoName,
         title: pr.title,
         html_url: pr.html_url,
+        user: {
+          avatar_url: pr.user?.avatar_url || "",
+          login: pr.user?.login || "",
+        },
       };
     });
     allPrs = {
