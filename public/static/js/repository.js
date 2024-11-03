@@ -26,9 +26,11 @@
     saveButton.addEventListener("click", (_) => {
       const newSettings = {
         ...settings,
-        repos: Array.from(checkboxs).filter((checkbox) => checkbox.checked).reduce((acc, checkbox) => {
-          return { ...acc, [checkbox.name]: checkbox.checked };
-        }, {}),
+        repos: Array.from(checkboxs)
+          .filter((checkbox) => checkbox.checked)
+          .reduce((acc, checkbox) => {
+            return { ...acc, [checkbox.name]: checkbox.checked };
+          }, {}),
       };
       localStorage.setItem(localStorageKey, JSON.stringify(newSettings));
       document.querySelector(".js-save-message")?.classList.remove("js-hidden");
