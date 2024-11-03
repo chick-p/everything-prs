@@ -9,6 +9,7 @@ export type PullRequestResponse =
 type Repository = {
   owner: string;
   name: string;
+  archived: boolean;
 };
 
 export class GitHub {
@@ -37,6 +38,7 @@ export class GitHub {
       return {
         owner: repo.owner.login,
         name: repo.name,
+        archived: repo.archived || false,
       };
     });
   }
