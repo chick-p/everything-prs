@@ -46,19 +46,21 @@ export const repositoryHtml = async (props: { token: string }) => {
   const client = new GitHub({ token });
   const results = await client.getAllRepos();
 
-  const tree = results.reduce((acc: Array<Owner>, repo) => {
-    const owner = findOwner(repo.owner, acc);
-    const fullname = `${repo.owner}/${repo.name}`;
-    if (!owner) {
-      acc = acc.concat({
-        name: repo.owner,
-        repos: [fullname],
-      });
+  const tree = results
+    .filter((repo) => !repo.archived)
+    .reduce((acc: Array<Owner>, repo) => {
+      const owner = findOwner(repo.owner, acc);
+      const fullname = `${repo.owner}/${repo.name}`;
+      if (!owner) {
+        acc = acc.concat({
+          name: repo.owner,
+          repos: [fullname],
+        });
+        return acc;
+      }
+      owner.repos = owner.repos.concat(fullname);
       return acc;
-    }
-    owner.repos = owner.repos.concat(fullname);
-    return acc;
-  }, []);
+    }, []);
 
   const repos = tree
     .sort((a, b) => a.name.localeCompare(b.name))
