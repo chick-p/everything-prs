@@ -137,6 +137,21 @@ legend {
   margin-top: 0.5rem;
 }
 
+.c-prs-list {
+  list-style: none;
+  padding: 0;
+}
+
+.c-prs-label {
+  font-weight: 800;
+}
+
+.c-prs-list____item-avator-icon {
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 50%;
+}
+
 .c-home-link {
   display: block;
   margin-top: 1.5rem;
