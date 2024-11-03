@@ -8,14 +8,15 @@ type Owner = {
 };
 
 const repoItem = (props: { repo: string }) => {
+  const repoName = props.repo;
   return html` <li class="c-repos-list__item">
     <input
       type="checkbox"
-      id="${props.repo}"
-      name="${props.repo}"
+      id="${repoName}"
+      name="${repoName}"
       class="js_repository_checkbox"
     />
-    <label for="${props.repo}">${props.repo}</label>
+    <label for="${repoName}">${repoName}</label>
   </li>`;
 };
 
@@ -59,10 +60,12 @@ export const repositoryHtml = async (props: { token: string }) => {
     return acc;
   }, []);
 
-  const repos = tree.map((owner) => {
-    owner.repos.sort();
-    return owner;
-  });
+  const repos = tree
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .map((owner) => {
+      owner.repos.sort();
+      return owner;
+    });
 
   return content({ repository: repos });
 };
