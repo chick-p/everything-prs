@@ -36,7 +36,6 @@ export const PullRequestHtml = async (props: {
   const repos = Object.entries(props.repos)
     .filter(([, value]) => value)
     .map(([key]) => key);
-  console.log(repos);
 
   const client = new GitHub({ token });
 
