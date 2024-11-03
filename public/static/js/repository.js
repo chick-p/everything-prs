@@ -17,11 +17,9 @@
     const watchedRepos = settings["repos"] || {};
     const checkboxs = document.querySelectorAll(".js_repository_checkbox");
     if (checkboxs) {
-      Array.from(checkboxs)
-        .filter((checkbox) => checkbox.checked)
-        .forEach((checkbox) => {
-          checkbox.checked = watchedRepos[checkbox.name] || false;
-        });
+      Array.from(checkboxs).forEach((checkbox) => {
+        checkbox.checked = watchedRepos[checkbox.name] || false;
+      });
     }
 
     const saveButton = document.querySelector(".js-save");
