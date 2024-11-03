@@ -26,7 +26,7 @@
     saveButton.addEventListener("click", (_) => {
       const newSettings = {
         ...settings,
-        repos: Array.from(checkboxs).reduce((acc, checkbox) => {
+        repos: Array.from(checkboxs).filter((checkbox) => checkbox.checked).reduce((acc, checkbox) => {
           return { ...acc, [checkbox.name]: checkbox.checked };
         }, {}),
       };
