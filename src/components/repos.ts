@@ -4,6 +4,7 @@ import { GitHub } from "../lib/github";
 
 type Owner = {
   name: string;
+  avatar_url: string;
   repos: Array<string>;
 };
 
@@ -24,7 +25,14 @@ const content = (props: { repository: Array<Owner> }) => html`
   <div>
     ${props.repository.map((owner) => {
       return html`<fieldset>
-        <legend>${owner.name}</legend>
+        <legend>
+          <img
+            class="c-repos-list__item-avator-icon"
+            src="${owner.avatar_url}"
+            alt=""
+          />
+          ${owner.name}
+        </legend>
         <ul class="c-repos-list">
           ${owner.repos.map((repo) => repoItem({ repo }))}
         </ul>
@@ -54,6 +62,7 @@ export const repositoryHtml = async (props: { token: string }) => {
       if (!owner) {
         acc = acc.concat({
           name: repo.owner,
+          avatar_url: repo.owner_avatar_url,
           repos: [fullname],
         });
         return acc;
