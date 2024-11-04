@@ -108,6 +108,20 @@ legend {
   text-decoration: none;
 }
 
+.c-main-content__loading-icon {
+  display: inline-block;
+  vertical-align: middle;
+  color: #666;
+  line-height: 1;
+  width: 1rem;
+  height: 1rem;
+  border: 0.12rem solid currentColor;
+  border-top-color: rgba(102, 102, 102, 0.3);
+  border-radius: 50%;
+  box-sizing: border-box;
+  animation: rotate 1s linear infinite;
+}
+
 .c-header-list {
   display: flex;
   gap: 0 0.5rem;
@@ -171,4 +185,13 @@ legend {
 .js-save-message {
   font-size: 0.875rem;
   color: "var(--color-dark-teal)";
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
