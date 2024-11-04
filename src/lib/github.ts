@@ -10,6 +10,7 @@ type Repository = {
   owner: string;
   name: string;
   archived: boolean;
+  owner_avatar_url: string;
 };
 
 export class GitHub {
@@ -39,6 +40,7 @@ export class GitHub {
         owner: repo.owner.login,
         name: repo.name,
         archived: repo.archived || false,
+        owner_avatar_url: repo.owner.avatar_url,
       };
     });
   }

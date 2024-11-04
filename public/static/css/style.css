@@ -147,6 +147,12 @@ legend {
   margin-top: 0.5rem;
 }
 
+.c-repos-list__item-avator-icon {
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 50%;
+}
+
 .c-repos-list__item input {
   margin-top: 0.5rem;
 }
