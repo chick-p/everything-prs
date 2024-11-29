@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20241112.0",
-    "@octokit/types": "^13.6.1",
+    "@octokit/types": "^13.6.2",
     "eslint": "^9.15.0",
     "eslint-config-prettier": "^9.1.0",
     "npm-run-all": "^4.1.5",
