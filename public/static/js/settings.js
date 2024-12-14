@@ -10,10 +10,11 @@
     const saveButton = document.querySelector(".js-save");
     saveButton.addEventListener("click", (_) => {
       const apiKey = ghTokenInput?.value || "";
+      const repos = settings["repos"] || [];
 
       const newSettings = {
         ...settings,
-        repos: [],
+        repos,
         "gh-token": apiKey,
       };
       localStorage.setItem(localStorageKey, JSON.stringify(newSettings));
