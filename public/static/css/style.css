@@ -100,7 +100,11 @@ legend {
   flex-wrap: wrap;
   justify-content: flex-start;
   padding: 1rem;
-  background-color: var(--color-light-teal);
+}
+
+.c-header-title__icon {
+  margin-right: 0.5rem;
+  text-decoration: none;
 }
 
 .c-header-title__link {
@@ -125,6 +129,7 @@ legend {
 .c-header-list {
   display: flex;
   gap: 0 0.5rem;
+  margin-top: auto;
   margin-left: auto;
 }
 

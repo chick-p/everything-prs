@@ -7,6 +7,7 @@ export const Header: FC<Props> = (props: Props) => {
   return (
     <header class="c-header">
       <h1>
+        <span class="c-header-title__icon">💫</span>
         <a href="/" class="c-header-title__link">
           {props.title}
         </a>
