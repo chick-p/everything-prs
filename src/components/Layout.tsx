@@ -19,10 +19,7 @@ export const Layout: FC = (props) => {
       </head>
       <body>
         <Header title={appName} />
-        <main class="c-content">
-          <h2>{props.title || ""}</h2>
-          {props.children}
-        </main>
+        <main class="c-content">{props.children}</main>
       </body>
     </html>
   );

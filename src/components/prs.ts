@@ -15,8 +15,8 @@ type PR = {
 };
 
 const list = (props: { name: string; prs: Array<PR> }) => html`
-  <div>
-    <div class="c-prs-label">${props.name}</div>
+  <section>
+    <h2 class="c-prs-label">${props.name}</h2>
     <ul class="c-prs-list">
       ${props.prs.map(
         (pr) =>
@@ -30,7 +30,7 @@ const list = (props: { name: string; prs: Array<PR> }) => html`
           </li>`,
       )}
     </ul>
-  </div>
+  </section>
 `;
 
 export const PullRequestHtml = async (props: {

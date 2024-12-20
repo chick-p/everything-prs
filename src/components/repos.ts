@@ -24,19 +24,21 @@ const repoItem = (props: { repo: string }) => {
 const content = (props: { repository: Array<Owner> }) => html`
   <div>
     ${props.repository.map((owner) => {
-      return html`<fieldset>
-        <legend>
-          <img
-            class="c-repos-list__item-avator-icon"
-            src="${owner.avatar_url}"
-            alt=""
-          />
-          ${owner.name}
-        </legend>
-        <ul class="c-repos-list">
-          ${owner.repos.map((repo) => repoItem({ repo }))}
-        </ul>
-      </fieldset>`;
+      return html`<section>
+        <fieldset>
+          <legend>
+            <img
+              class="c-repos-list__item-avator-icon"
+              src="${owner.avatar_url}"
+              alt=""
+            />
+            ${owner.name}
+          </legend>
+          <ul class="c-repos-list">
+            ${owner.repos.map((repo) => repoItem({ repo }))}
+          </ul>
+        </fieldset>
+      </section>`;
     })}
     <div class="c-sticky-bottom-menu">
       <button class="js-save">Save</button>
