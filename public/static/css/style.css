@@ -19,7 +19,7 @@ html {
     "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
 }
 body {
-  padding: 1rem;
+  padding: 0 1rem;
 }
 
 h1 {
@@ -29,6 +29,7 @@ h1 {
 
 h2 {
   font-size: 1.25rem;
+  margin-top: 0;
 }
 
 ul {
@@ -43,7 +44,7 @@ label {
 }
 
 main {
-  padding: 1rem;
+  padding: 0;
 }
 
 main * + * {
@@ -99,7 +100,7 @@ legend {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  padding: 1rem;
+  padding: 1rem 0;
 }
 
 .c-header-title__icon {
