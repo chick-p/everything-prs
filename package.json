@@ -15,7 +15,7 @@
     "hono": "^4.6.20"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20250121.0",
+    "@cloudflare/workers-types": "^4.20250129.0",
     "@octokit/types": "^13.7.0",
     "eslint": "^9.18.0",
     "eslint-config-prettier": "^10.0.1",
