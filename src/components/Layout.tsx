@@ -16,6 +16,8 @@ export const Layout: FC = (props) => {
           media="all"
         />
         <title>{appName}</title>
+        <link rel="icon" href="/static/favicon.svg" />
+        <link rel="apple-touch-icon" href="/static/apple-touch-icon.png" />
       </head>
       <body>
         <Header title={appName} />
