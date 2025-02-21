@@ -11,7 +11,7 @@
     "fix:eslint": "pnpm run lint:eslint --fix"
   },
   "dependencies": {
-    "@octokit/rest": "^21.1.0",
+    "@octokit/rest": "^21.1.1",
     "hono": "^4.7.1"
   },
   "devDependencies": {
