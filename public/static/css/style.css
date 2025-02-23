@@ -15,8 +15,9 @@ html {
   font-size: 100%;
   background-color: var(--color-white);
   color: var(--color-black);
-  font-family: Roboto, "Helvetica Neue", "Noto Sans JP",
-    "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+  font-family:
+    Roboto, "Helvetica Neue", "Noto Sans JP", "Hiragino Kaku Gothic ProN",
+    Meiryo, sans-serif;
 }
 body {
   padding: 0 1rem;
