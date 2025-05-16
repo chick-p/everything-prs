@@ -16,8 +16,8 @@ importers:
         version: 4.7.9
     devDependencies:
       '@cloudflare/workers-types':
-        specifier: ^4.20250509.0
-        version: 4.20250509.0
+        specifier: ^4.20250515.0
+        version: 4.20250515.0
       '@octokit/types':
         specifier: ^14.0.0
         version: 14.0.0
@@ -38,7 +38,7 @@ importers:
         version: 8.32.0(eslint@9.25.1)(typescript@5.6.3)
       wrangler:
         specifier: ^4.14.4
-        version: 4.14.4(@cloudflare/workers-types@4.20250509.0)
+        version: 4.14.4(@cloudflare/workers-types@4.20250515.0)
 
 packages:
 
@@ -85,8 +85,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@cloudflare/workers-types@4.20250509.0':
-    resolution: {integrity: sha512-Zqxda8NapibaTnag4pjfa7DIcObSnItcqimvfhqoYq/ShsGJ/nYGx4QaXRTKo1t6HzvC8Qn4g4UKFmdyON5e6Q==}
+  '@cloudflare/workers-types@4.20250515.0':
+    resolution: {integrity: sha512-KoHFMH04gOXp3KEI+wrFIU+3ZfoSXnwqZTpybNQjalHoN3pWjtWBb/030cCRAZ639YX+DAHAxNF7AvEYGz1oaA==}
 
   '@cspotcode/source-map-support@0.8.1':
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
@@ -1503,7 +1503,7 @@ snapshots:
   '@cloudflare/workerd-windows-64@1.20250507.0':
     optional: true
 
-  '@cloudflare/workers-types@4.20250509.0': {}
+  '@cloudflare/workers-types@4.20250515.0': {}
 
   '@cspotcode/source-map-support@0.8.1':
     dependencies:
@@ -2946,7 +2946,7 @@ snapshots:
       '@cloudflare/workerd-linux-arm64': 1.20250507.0
       '@cloudflare/workerd-windows-64': 1.20250507.0
 
-  wrangler@4.14.4(@cloudflare/workers-types@4.20250509.0):
+  wrangler@4.14.4(@cloudflare/workers-types@4.20250515.0):
     dependencies:
       '@cloudflare/kv-asset-handler': 0.4.0
       '@cloudflare/unenv-preset': 2.3.1(unenv@2.0.0-rc.15)(workerd@1.20250507.0)
@@ -2957,7 +2957,7 @@ snapshots:
       unenv: 2.0.0-rc.15
       workerd: 1.20250507.0
     optionalDependencies:
-      '@cloudflare/workers-types': 4.20250509.0
+      '@cloudflare/workers-types': 4.20250515.0
       fsevents: 2.3.3
       sharp: 0.33.5
     transitivePeerDependencies:
