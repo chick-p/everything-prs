@@ -54,7 +54,7 @@ export const repositoryHtml = async (props: { token: string }) => {
   const token = props.token;
 
   const client = new GitHub({ token });
-  const results = await client.getAllRepos();
+  const results = await client.fetchAllRepos();
 
   const tree = results
     .filter((repo) => !repo.archived)

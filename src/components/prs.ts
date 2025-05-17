@@ -55,18 +55,17 @@ export const PullRequestHtml = async (props: {
 
   for (const repo of repos) {
     const [owner, repoName] = repo.split("/");
-    const prs =
-      (await client.fetchPullRequests({ owner, repo: repoName })) || [];
+    const prs = (await client.fetchAllPullRequests({ owner, repoName })) || [];
     const key = `${owner}/${repoName}`;
     const converted = prs.map((pr) => {
       return {
         owner,
         repo: repoName,
         title: pr.title,
-        html_url: pr.html_url,
+        html_url: pr.url,
         user: {
-          avatar_url: pr.user?.avatar_url || "",
-          login: pr.user?.login || "",
+          avatar_url: pr.author.avatarUrl,
+          login: pr.author.login,
         },
       };
     });
