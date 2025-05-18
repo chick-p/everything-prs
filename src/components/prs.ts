@@ -16,7 +16,7 @@ type PR = {
 
 const list = (props: { name: string; prs: Array<PR> }) => html`
   <section>
-    <h2 class="c-prs-label">${props.name}</h2>
+    <h3 class="c-prs-label">${props.name}</h3>
     <ul class="c-prs-list">
       ${props.prs.map(
         (pr) =>
@@ -86,5 +86,8 @@ export const PullRequestHtml = async (props: {
   if (allContent.length === 0) {
     return html`<div>No pull requests</div>`;
   }
-  return allContent.join("");
+  return `
+    <h2>Pull Requests</h2>
+    ${allContent.join("")}
+    `;
 };

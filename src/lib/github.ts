@@ -26,6 +26,18 @@ export type PullRequest = {
   };
 };
 
+export type ContributionsCollection = {
+  contributionCalendar: {
+    totalContributions: number;
+    weeks: Array<{
+      contributionDays: Array<{
+        contributionCount: number;
+        date: string;
+      }>;
+    }>;
+  };
+};
+
 interface GraphQLResponse<T> {
   data: T;
   errors?: Array<{
@@ -288,5 +300,66 @@ export class GitHub {
     }
 
     return allPullRequests;
+  }
+
+  async fetchContributes(params: {
+    username: string;
+    today: string;
+  }): Promise<ContributionsCollection> {
+    const { username, today } = params;
+    try {
+      const query = `
+      query($username:String!, $from:DateTime!, $to:DateTime!) {
+          user(login: $username) {
+              contributionsCollection(from: $from, to: $to) {
+                contributionCalendar {
+                  totalContributions
+                  weeks {
+                    contributionDays {
+                      contributionCount
+                      date
+                    }
+                  }
+                }
+              }
+            }
+          }
+      `;
+
+      const variables = {
+        username,
+        from: `${today}T00:00:00`,
+        to: `${today}T23:59:59`,
+      };
+
+      const data = await this.sendQuery<{
+        user: {
+          contributionsCollection: {
+            contributionCalendar: {
+              totalContributions: number;
+              weeks: Array<{
+                contributionDays: Array<{
+                  contributionCount: number;
+                  date: string;
+                }>;
+              }>;
+            };
+          };
+        };
+      }>(query, variables);
+
+      return data.user.contributionsCollection;
+    } catch (error) {
+      console.error(
+        `Error fetching contributions for user ${username}:`,
+        error,
+      );
+      return {
+        contributionCalendar: {
+          totalContributions: 0,
+          weeks: [],
+        },
+      };
+    }
   }
 }

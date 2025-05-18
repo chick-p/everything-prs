@@ -5,6 +5,8 @@ import manifest from "__STATIC_CONTENT_MANIFEST";
 import { Home, Settings, Repositories } from "./pages/index";
 import { PullRequestHtml } from "./components/prs";
 import { repositoryHtml } from "./components/repos";
+import { TodayContributionHtml } from "./components/contribution";
+import { html } from "hono/html";
 
 const app = new Hono();
 
@@ -19,7 +21,9 @@ app.post("/prs", async (c) => {
   const body = await c.req.json();
   let htmlContent;
   if (token) {
-    htmlContent = PullRequestHtml({ token, repos: body.repos });
+    const pullRequestHtml = await PullRequestHtml({ token, repos: body.repos });
+    const contributionHtml = await TodayContributionHtml({ token });
+    htmlContent = contributionHtml + pullRequestHtml;
   } else {
     htmlContent = `<div>Unauthorized</div>`;
   }
