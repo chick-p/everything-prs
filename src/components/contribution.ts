@@ -5,8 +5,12 @@ import { GitHub } from "../lib/github";
 export const TodayContributionHtml = async (props: { token: string }) => {
   const token = props.token;
 
-  const today = new Date();
-  const todayString = today.toISOString().split("T")[0];
+  // The sv-SE locale returns date strings in YYYY-MM-DD format.
+  const todayString = new Date()
+    .toLocaleDateString("sv-SE", {
+      timeZone: "Asia/Tokyo",
+    })
+    .split("T")[0];
 
   const client = new GitHub({ token });
   const { login: username } = await client.getMe();
