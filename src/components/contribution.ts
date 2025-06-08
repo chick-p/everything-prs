@@ -2,13 +2,16 @@ import { html } from "hono/html";
 
 import { GitHub } from "../lib/github";
 
-export const TodayContributionHtml = async (props: { token: string }) => {
-  const token = props.token;
+export const TodayContributionHtml = async (props: {
+  token: string;
+  timeZone: string;
+}) => {
+  const { token, timeZone = "Asia/Tokyo" } = props;
 
   // The sv-SE locale returns date strings in YYYY-MM-DD format.
   const todayString = new Date()
     .toLocaleDateString("sv-SE", {
-      timeZone: "Asia/Tokyo",
+      timeZone,
     })
     .split("T")[0];
 

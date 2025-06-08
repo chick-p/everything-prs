@@ -8,7 +8,11 @@ import { repositoryHtml } from "./components/repos";
 import { TodayContributionHtml } from "./components/contribution";
 import { html } from "hono/html";
 
-const app = new Hono();
+type Bindings = {
+  TIMEZONE: string;
+};
+
+const app = new Hono<{ Bindings: Bindings }>();
 
 app.get("/static/*", serveStatic({ root: "./", manifest }));
 
@@ -18,11 +22,12 @@ app.get("/", (c) => {
 
 app.post("/prs", async (c) => {
   const token = c.req.raw.headers.get("everything-prs-token");
+  const timeZone = c.env.TIMEZONE;
   const body = await c.req.json();
   let htmlContent;
   if (token) {
     const pullRequestHtml = await PullRequestHtml({ token, repos: body.repos });
-    const contributionHtml = await TodayContributionHtml({ token });
+    const contributionHtml = await TodayContributionHtml({ token, timeZone });
     htmlContent = contributionHtml + pullRequestHtml;
   } else {
     htmlContent = `<div>Unauthorized</div>`;
