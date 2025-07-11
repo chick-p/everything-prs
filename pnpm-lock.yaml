@@ -16,8 +16,8 @@ importers:
         version: 4.8.3
     devDependencies:
       '@cloudflare/workers-types':
-        specifier: ^4.20250704.0
-        version: 4.20250704.0
+        specifier: ^4.20250711.0
+        version: 4.20250711.0
       '@octokit/types':
         specifier: ^14.0.0
         version: 14.1.0
@@ -38,7 +38,7 @@ importers:
         version: 8.35.1(eslint@9.30.1)(typescript@5.8.3)
       wrangler:
         specifier: ^4.23.0
-        version: 4.23.0(@cloudflare/workers-types@4.20250704.0)
+        version: 4.23.0(@cloudflare/workers-types@4.20250711.0)
 
 packages:
 
@@ -85,8 +85,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@cloudflare/workers-types@4.20250704.0':
-    resolution: {integrity: sha512-KR8XwXVnJdbSStdmmkkqE0ac5UCrRT+HyFnpt/VcVMzEVeAiZfH0VAcYXasMs842CE1BsdbQG0FboVV9EmyMpQ==}
+  '@cloudflare/workers-types@4.20250711.0':
+    resolution: {integrity: sha512-aocBpm0Mbbz6GIOLJDbPrl4gZZ2o2A1a7pjFWlt3j2T1xghP0h1V3LtWUhyk74bAY5qOEuGQyLgr+svY//yCrQ==}
 
   '@cspotcode/source-map-support@0.8.1':
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
@@ -153,12 +153,6 @@ packages:
     resolution: {integrity: sha512-kro4c0P85GMfFYqW4TWOpvmF8rFShbWGnrLqlzp4X1TNWjRY3JMYUfDCtOxPKOIY8B0WC8HN51hGP4I4hz4AaQ==}
     engines: {node: '>=18'}
     cpu: [arm]
-    os: [linux]
-
-  '@esbuild/linux-ia32@0.25.4':
-    resolution: {integrity: sha512-yTEjoapy8UP3rv8dB0ip3AfMpRbyhSN3+hY8mo/i4QXFeDxmiYbEKp3ZRjBKcOP862Ua4b1PDfwlvbuwY7hIGQ==}
-    engines: {node: '>=18'}
-    cpu: [ia32]
     os: [linux]
 
   '@esbuild/linux-loong64@0.25.4':
@@ -1613,7 +1607,7 @@ snapshots:
   '@cloudflare/workerd-windows-64@1.20250617.0':
     optional: true
 
-  '@cloudflare/workers-types@4.20250704.0': {}
+  '@cloudflare/workers-types@4.20250711.0': {}
 
   '@cspotcode/source-map-support@0.8.1':
     dependencies:
@@ -1652,9 +1646,6 @@ snapshots:
     optional: true
 
   '@esbuild/linux-arm@0.25.4':
-    optional: true
-
-  '@esbuild/linux-ia32@0.25.4':
     optional: true
 
   '@esbuild/linux-loong64@0.25.4':
@@ -2299,7 +2290,6 @@ snapshots:
       '@esbuild/freebsd-x64': 0.25.4
       '@esbuild/linux-arm': 0.25.4
       '@esbuild/linux-arm64': 0.25.4
-      '@esbuild/linux-ia32': 0.25.4
       '@esbuild/linux-loong64': 0.25.4
       '@esbuild/linux-mips64el': 0.25.4
       '@esbuild/linux-ppc64': 0.25.4
@@ -3227,7 +3217,7 @@ snapshots:
       '@cloudflare/workerd-linux-arm64': 1.20250617.0
       '@cloudflare/workerd-windows-64': 1.20250617.0
 
-  wrangler@4.23.0(@cloudflare/workers-types@4.20250704.0):
+  wrangler@4.23.0(@cloudflare/workers-types@4.20250711.0):
     dependencies:
       '@cloudflare/kv-asset-handler': 0.4.0
       '@cloudflare/unenv-preset': 2.3.3(unenv@2.0.0-rc.17)(workerd@1.20250617.0)
@@ -3238,7 +3228,7 @@ snapshots:
       unenv: 2.0.0-rc.17
       workerd: 1.20250617.0
     optionalDependencies:
-      '@cloudflare/workers-types': 4.20250704.0
+      '@cloudflare/workers-types': 4.20250711.0
       fsevents: 2.3.3
     transitivePeerDependencies:
       - bufferutil
