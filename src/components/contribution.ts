@@ -2,12 +2,22 @@ import { html } from "hono/html";
 
 import { GitHub } from "../lib/github";
 
-export const TodayContributionHtml = async (props: { token: string }) => {
-  const token = props.token;
+export const TodayContributionHtml = async (props: {
+  token: string;
+  tz?: string;
+}) => {
+  const { token, tz } = props;
 
   const today = new Date();
-  const todayString = today.toISOString().split("T")[0];
-
+  const timeZone = tz || "Asia/Tokyo";
+  const todayString = new Intl.DateTimeFormat("ja-JP", {
+    timeZone,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  })
+    .format(today)
+    .replace(/\//g, "-");
   const client = new GitHub({ token });
   const { login: username } = await client.getMe();
   const { contributionCalendar } = await client.fetchContributes({
