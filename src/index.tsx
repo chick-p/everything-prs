@@ -8,7 +8,11 @@ import { repositoryHtml } from "./components/repos";
 import { TodayContributionHtml } from "./components/contribution";
 import { html } from "hono/html";
 
-const app = new Hono();
+type Bindings = {
+  TZ: string;
+};
+
+const app = new Hono<{ Bindings: Bindings }>();
 
 app.get("/static/*", serveStatic({ root: "./", manifest }));
 
@@ -22,7 +26,10 @@ app.post("/prs", async (c) => {
   let htmlContent;
   if (token) {
     const pullRequestHtml = await PullRequestHtml({ token, repos: body.repos });
-    const contributionHtml = await TodayContributionHtml({ token });
+    const contributionHtml = await TodayContributionHtml({
+      token,
+      tz: c.env.TZ,
+    });
     htmlContent = contributionHtml + pullRequestHtml;
   } else {
     htmlContent = `<div>Unauthorized</div>`;

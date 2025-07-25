@@ -4,3 +4,6 @@ main = "src/index.tsx"
 
 [site]
 bucket = "./public"
+
+[vars]
+TZ = "Asia/Tokyo"
