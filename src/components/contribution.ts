@@ -10,14 +10,13 @@ export const TodayContributionHtml = async (props: {
 
   const today = new Date();
   const timeZone = tz || "Asia/Tokyo";
-  const todayString = new Intl.DateTimeFormat("ja-JP", {
+  // sv locale returs YYYY-MM-DD format
+  const todayString = new Intl.DateTimeFormat("sv", {
     timeZone,
     year: "numeric",
     month: "2-digit",
     day: "2-digit",
-  })
-    .format(today)
-    .replace(/\//g, "-");
+  }).format(today);
   const client = new GitHub({ token });
   const { login: username } = await client.getMe();
   const { contributionCalendar } = await client.fetchContributes({
