@@ -29,8 +29,8 @@ export const TodayContributionHtml = async (props: {
   return html`
     <section>
       <div>
-        Today's contribution
-        ${todayContribution.contributionCount > 0 ? "✅" : "🚫"}
+        ${todayContribution.contributionCount > 0 ? "💚" : "💔"} Today's
+        contribution
       </div>
     </section>
   `;
