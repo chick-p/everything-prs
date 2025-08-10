@@ -12,6 +12,21 @@ export type UserData = {
   avatarUrl: string;
 };
 
+export type CheckStatusState =
+  | "SUCCESS"
+  | "ERROR"
+  | "FAILURE"
+  | "PENDING"
+  | "EXPECTED";
+
+export const state: Record<CheckStatusState, string> = {
+  SUCCESS: "✅",
+  ERROR: "🚨",
+  FAILURE: "❌",
+  PENDING: "⏳",
+  EXPECTED: "🤔",
+};
+
 export type PullRequest = {
   id: string;
   number: number;
@@ -24,6 +39,7 @@ export type PullRequest = {
     login: string;
     avatarUrl: string;
   };
+  checkStatus: CheckStatusState | null;
 };
 
 export type ContributionsCollection = {
@@ -228,6 +244,15 @@ export class GitHub {
                   login
                   avatarUrl
                 }
+                commits(last: 1) {
+                  nodes {
+                    commit {
+                      statusCheckRollup {
+                        state
+                      }
+                    }
+                  }
+                }
               }
             }
           }
@@ -246,13 +271,48 @@ export class GitHub {
         repository: {
           pullRequests: {
             pageInfo: { hasNextPage: boolean; endCursor: string | null };
-            nodes: PullRequest[];
+            nodes: Array<{
+              id: string;
+              number: number;
+              title: string;
+              url: string;
+              state: string;
+              createdAt: string;
+              updatedAt: string;
+              author: {
+                login: string;
+                avatarUrl: string;
+              };
+              commits: {
+                nodes: Array<{
+                  commit: {
+                    statusCheckRollup: {
+                      state: CheckStatusState;
+                    } | null;
+                  };
+                }>;
+              };
+            }>;
           };
         };
       }>(query, variables);
 
+      const pullRequests: PullRequest[] =
+        data.repository.pullRequests.nodes.map((pr) => {
+          const { commits, ...rest } = pr;
+          let checkStatus: CheckStatusState | null = null;
+          const latestCommit = commits.nodes?.[0].commit;
+          if (latestCommit.statusCheckRollup) {
+            checkStatus = latestCommit.statusCheckRollup.state;
+          }
+          return {
+            ...rest,
+            checkStatus,
+          };
+        });
+
       return {
-        pullRequests: data.repository.pullRequests.nodes,
+        pullRequests,
         hasNextPage: data.repository.pullRequests.pageInfo.hasNextPage,
         endCursor: data.repository.pullRequests.pageInfo.endCursor,
       };
