@@ -1,7 +1,7 @@
 import { html } from "hono/html";
 
 import type { HtmlEscapedString } from "hono/utils/html";
-import { GitHub } from "../lib/github";
+import { CheckStatusState, GitHub, state } from "../lib/github";
 
 type PR = {
   owner: string;
@@ -12,23 +12,25 @@ type PR = {
     avatar_url: string;
     login?: string;
   };
+  check_status: CheckStatusState | null;
 };
 
 const list = (props: { name: string; prs: Array<PR> }) => html`
   <section>
     <h3 class="c-prs-label">${props.name}</h3>
     <ul class="c-prs-list">
-      ${props.prs.map(
-        (pr) =>
-          html`<li>
-            <img
-              class="c-prs-list____item-avator-icon"
-              src="${pr.user.avatar_url}"
-              alt="${pr.user.login}"
-            />
-            <a href="${pr.html_url}">${pr.title}</a>
-          </li>`,
-      )}
+      ${props.prs.map((pr) => {
+        const status = pr.check_status || "EXPECTED";
+        return html`<li>
+          <img
+            class="c-prs-list____item-avator-icon"
+            src="${pr.user.avatar_url}"
+            alt="${pr.user.login}"
+          />
+          <a href="${pr.html_url}">${pr.title}</a>
+          <span class="c-prs-list__item-check">${state[status]}</span>
+        </li>`;
+      })}
     </ul>
   </section>
 `;
@@ -67,6 +69,7 @@ export const PullRequestHtml = async (props: {
           avatar_url: pr.author.avatarUrl,
           login: pr.author.login,
         },
+        check_status: pr.checkStatus,
       };
     });
     allPrs = {
