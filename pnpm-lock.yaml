@@ -19,8 +19,8 @@ importers:
         specifier: ^4.20251011.0
         version: 4.20251011.0
       '@octokit/types':
-        specifier: ^15.0.0
-        version: 15.0.0
+        specifier: ^15.0.1
+        version: 15.0.1
       eslint:
         specifier: ^9.37.0
         version: 9.37.0
@@ -481,8 +481,8 @@ packages:
   '@octokit/types@14.1.0':
     resolution: {integrity: sha512-1y6DgTy8Jomcpu33N+p5w58l6xyt55Ar2I91RPiIA0xCJBXyUAhXCcmZaDWSANiha7R9a6qJJ2CRomGPZ6f46g==}
 
-  '@octokit/types@15.0.0':
-    resolution: {integrity: sha512-8o6yDfmoGJUIeR9OfYU0/TUJTnMPG2r68+1yEdUeG2Fdqpj8Qetg0ziKIgcBm0RW/j29H41WP37CYCEhp6GoHQ==}
+  '@octokit/types@15.0.1':
+    resolution: {integrity: sha512-sdiirM93IYJ9ODDCBgmRPIboLbSkpLa5i+WLuXH8b8Atg+YMLAyLvDDhNWLV4OYd08tlvYfVm/dw88cqHWtw1Q==}
 
   '@poppinss/colors@4.1.5':
     resolution: {integrity: sha512-FvdDqtcRCtz6hThExcFOgW0cWX+xwSMWcRuQe5ZEb2m7cVQOAVZOIMt+/v9RxGiD9/OY16qJBXK4CVKWAPalBw==}
@@ -1917,7 +1917,7 @@ snapshots:
     dependencies:
       '@octokit/openapi-types': 25.1.0
 
-  '@octokit/types@15.0.0':
+  '@octokit/types@15.0.1':
     dependencies:
       '@octokit/openapi-types': 26.0.0
 
