@@ -24,10 +24,10 @@ const list = (props: { name: string; prs: Array<PR> }) => html`
         return html`<li>
           <img
             class="c-prs-list____item-avator-icon"
-            src="${pr.user.avatar_url}"
-            alt="${pr.user.login}"
+            src=${pr.user.avatar_url}
+            alt=${pr.user.login}
           />
-          <a href="${pr.html_url}">${pr.title}</a>
+          <a href=${pr.html_url}>${pr.title}</a>
           <span class="c-prs-list__item-check">${state[status]}</span>
         </li>`;
       })}

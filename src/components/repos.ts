@@ -13,11 +13,11 @@ const repoItem = (props: { repo: string }) => {
   return html` <li class="c-repos-list__item">
     <input
       type="checkbox"
-      id="${repoName}"
-      name="${repoName}"
+      id=${repoName}
+      name=${repoName}
       class="js_repository_checkbox"
     />
-    <label for="${repoName}">${repoName}</label>
+    <label for=${repoName}>${repoName}</label>
   </li>`;
 };
 
@@ -29,7 +29,7 @@ const content = (props: { repository: Array<Owner> }) => html`
           <legend>
             <img
               class="c-repos-list__item-avator-icon"
-              src="${owner.avatar_url}"
+              src=${owner.avatar_url}
               alt=""
             />
             ${owner.name}
