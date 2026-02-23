@@ -16,3 +16,7 @@ updates:
       octkit:
         patterns:
           - "@octokit/*"
+      eslint:
+        patterns:
+          - "eslint*"
+          - "typescript-eslint"
