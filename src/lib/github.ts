@@ -57,6 +57,7 @@ export type ContributionsCollection = {
 interface GraphQLResponse<T> {
   data: T;
   errors?: Array<{
+    type?: string;
     message: string;
     locations?: Array<{
       line: number;
@@ -78,7 +79,7 @@ export class GitHub {
   private async sendQuery<T>(
     query: string,
     variables?: Record<string, unknown>,
-  ): Promise<T> {
+  ): Promise<{ data: T; hasForbiddenErrors: boolean }> {
     const response = await fetch(this.endpoint, {
       method: "POST",
       headers: {
@@ -96,9 +97,13 @@ export class GitHub {
 
     const json: GraphQLResponse<T> = await response.json();
     if (json.errors && json.errors.length > 0) {
-      throw new Error(`GraphQL errors: ${JSON.stringify(json.errors)}`);
+      const fatalErrors = json.errors.filter((e) => e.type !== "FORBIDDEN");
+      if (fatalErrors.length > 0 || !json.data) {
+        throw new Error(`GraphQL errors: ${JSON.stringify(fatalErrors)}`);
+      }
+      return { data: json.data, hasForbiddenErrors: true };
     }
-    return json.data;
+    return { data: json.data, hasForbiddenErrors: false };
   }
 
   async getMe(): Promise<UserData> {
@@ -113,13 +118,14 @@ export class GitHub {
       }
     `;
 
-    const data = await this.sendQuery<{ viewer: UserData }>(query);
+    const { data } = await this.sendQuery<{ viewer: UserData }>(query);
     return data.viewer;
   }
 
   async fetchRepos(
     cursor: string | null = null,
     perPage = 100,
+    includeOrgs = false,
   ): Promise<{
     repositories: Repository[];
     hasNextPage: boolean;
@@ -138,6 +144,7 @@ export class GitHub {
                 owner {
                   login
                   avatarUrl
+                  __typename
                 }
                 name
                 isArchived
@@ -152,12 +159,12 @@ export class GitHub {
         cursor,
       };
 
-      const data = await this.sendQuery<{
+      const { data } = await this.sendQuery<{
         viewer: {
           watching: {
             pageInfo: { hasNextPage: boolean; endCursor: string | null };
             nodes: Array<{
-              owner: { login: string; avatarUrl: string };
+              owner: { login: string; avatarUrl: string; __typename: string };
               name: string;
               isArchived: boolean;
             }>;
@@ -165,12 +172,14 @@ export class GitHub {
         };
       }>(query, variables);
 
-      const repositories = data.viewer.watching.nodes.map((repo) => ({
-        owner: repo.owner.login,
-        name: repo.name,
-        archived: repo.isArchived,
-        owner_avatar_url: repo.owner.avatarUrl,
-      }));
+      const repositories = data.viewer.watching.nodes
+        .filter((repo) => includeOrgs || repo.owner.__typename === "User")
+        .map((repo) => ({
+          owner: repo.owner.login,
+          name: repo.name,
+          archived: repo.isArchived,
+          owner_avatar_url: repo.owner.avatarUrl,
+        }));
 
       return {
         repositories,
@@ -187,13 +196,15 @@ export class GitHub {
     }
   }
 
-  async fetchAllRepos(): Promise<Repository[]> {
+  async fetchAllRepos({
+    includeOrgs = false,
+  }: { includeOrgs?: boolean } = {}): Promise<Repository[]> {
     let allRepositories: Repository[] = [];
     let hasNextPage = true;
     let endCursor: string | null = null;
 
     while (hasNextPage) {
-      const result = await this.fetchRepos(endCursor);
+      const result = await this.fetchRepos(endCursor, 100, includeOrgs);
       allRepositories = [...allRepositories, ...result.repositories];
       hasNextPage = result.hasNextPage;
       endCursor = result.endCursor;
@@ -222,6 +233,7 @@ export class GitHub {
     pullRequests: PullRequest[];
     hasNextPage: boolean;
     endCursor: string | null;
+    hasPermissionError: boolean;
   }> {
     try {
       const query = `
@@ -267,7 +279,7 @@ export class GitHub {
         state: [state],
       };
 
-      const data = await this.sendQuery<{
+      const { data, hasForbiddenErrors } = await this.sendQuery<{
         repository: {
           pullRequests: {
             pageInfo: { hasNextPage: boolean; endCursor: string | null };
@@ -301,8 +313,8 @@ export class GitHub {
         data.repository.pullRequests.nodes.map((pr) => {
           const { commits, ...rest } = pr;
           let checkStatus: CheckStatusState | null = null;
-          const latestCommit = commits.nodes?.[0].commit;
-          if (latestCommit.statusCheckRollup) {
+          const latestCommit = commits.nodes?.[0]?.commit;
+          if (latestCommit?.statusCheckRollup) {
             checkStatus = latestCommit.statusCheckRollup.state;
           }
           return {
@@ -315,6 +327,7 @@ export class GitHub {
         pullRequests,
         hasNextPage: data.repository.pullRequests.pageInfo.hasNextPage,
         endCursor: data.repository.pullRequests.pageInfo.endCursor,
+        hasPermissionError: hasForbiddenErrors,
       };
     } catch (error) {
       console.error(
@@ -325,6 +338,7 @@ export class GitHub {
         pullRequests: [],
         hasNextPage: false,
         endCursor: null,
+        hasPermissionError: false,
       };
     }
   }
@@ -337,10 +351,11 @@ export class GitHub {
     owner: string;
     repoName: string;
     state?: "OPEN" | "CLOSED" | "MERGED";
-  }): Promise<PullRequest[]> {
+  }): Promise<{ pullRequests: PullRequest[]; hasPermissionError: boolean }> {
     let allPullRequests: PullRequest[] = [];
     let hasNextPage = true;
     let endCursor: string | null = null;
+    let hasPermissionError = false;
 
     while (hasNextPage) {
       const result = await this.fetchPullRequests({
@@ -353,13 +368,14 @@ export class GitHub {
       allPullRequests = [...allPullRequests, ...result.pullRequests];
       hasNextPage = result.hasNextPage;
       endCursor = result.endCursor;
+      if (result.hasPermissionError) hasPermissionError = true;
 
       if (!endCursor) {
         break;
       }
     }
 
-    return allPullRequests;
+    return { pullRequests: allPullRequests, hasPermissionError };
   }
 
   async fetchContributes(params: {
@@ -392,7 +408,7 @@ export class GitHub {
         to: `${today}T23:59:59`,
       };
 
-      const data = await this.sendQuery<{
+      const { data } = await this.sendQuery<{
         user: {
           contributionsCollection: {
             contributionCalendar: {
