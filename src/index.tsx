@@ -47,9 +47,11 @@ app.get("/repos", (c) => {
 
 app.post("/repos", async (c) => {
   const token = c.req.raw.headers.get("everything-prs-token");
+  const includeOrgs =
+    c.req.raw.headers.get("everything-prs-include-orgs") === "1";
   let htmlContent;
   if (token) {
-    htmlContent = repositoryHtml({ token });
+    htmlContent = repositoryHtml({ token, includeOrgs });
   } else {
     htmlContent = `<div>Unauthorized</div>`;
   }

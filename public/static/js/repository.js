@@ -9,6 +9,7 @@
       method: "POST",
       headers: {
         "everything-prs-token": ghToken,
+        "everything-prs-include-orgs": settings["include-orgs"] ? "1" : "0",
       },
     });
     const repos = await result.text();

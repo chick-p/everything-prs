@@ -54,12 +54,15 @@ export const PullRequestHtml = async (props: {
   const client = new GitHub({ token });
 
   let allPrs: Record<string, Array<PR>> = {};
+  const permissionErrorRepos: string[] = [];
 
   for (const repo of repos) {
     const [owner, repoName] = repo.split("/");
-    const prs = (await client.fetchAllPullRequests({ owner, repoName })) || [];
+    const { pullRequests, hasPermissionError } =
+      await client.fetchAllPullRequests({ owner, repoName });
     const key = `${owner}/${repoName}`;
-    const converted = prs.map((pr) => {
+    if (hasPermissionError) permissionErrorRepos.push(key);
+    const converted = pullRequests.map((pr) => {
       return {
         owner,
         repo: repoName,
@@ -86,11 +89,26 @@ export const PullRequestHtml = async (props: {
     }
   }
 
+  const callout =
+    permissionErrorRepos.length > 0
+      ? html`<div class="c-callout c-callout--warning">
+          <p>
+            CI status could not be loaded for the following repositories due to
+            insufficient token permissions. Please add
+            <strong>Commit statuses: Read</strong> to your token.
+          </p>
+          <ul>
+            ${permissionErrorRepos.map((r) => html`<li>${r}</li>`)}
+          </ul>
+        </div>`
+      : "";
+
   if (allContent.length === 0) {
-    return html`<div>No pull requests</div>`;
+    return html`<div>${callout}<div>No pull requests</div></div>`;
   }
-  return `
+  return html`<div>
+    ${callout}
     <h2>Pull Requests</h2>
-    ${allContent.join("")}
-    `;
+    ${allContent}
+  </div>`;
 };

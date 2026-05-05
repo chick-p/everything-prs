@@ -50,11 +50,14 @@ const content = (props: { repository: Array<Owner> }) => html`
 const findOwner = (owner: string, tree: Array<Owner>) =>
   tree.find((item) => item.name === owner);
 
-export const repositoryHtml = async (props: { token: string }) => {
-  const token = props.token;
+export const repositoryHtml = async (props: {
+  token: string;
+  includeOrgs?: boolean;
+}) => {
+  const { token, includeOrgs = false } = props;
 
   const client = new GitHub({ token });
-  const results = await client.fetchAllRepos();
+  const results = await client.fetchAllRepos({ includeOrgs });
 
   const tree = results
     .filter((repo) => !repo.archived)

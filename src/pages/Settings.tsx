@@ -17,6 +17,15 @@ export const Settings: FC = async () => {
           />
         </div>
         <div>
+          <input
+            id="include-orgs"
+            name="include-orgs"
+            type="checkbox"
+            class="js-include-orgs"
+          />
+          <label for="include-orgs">Include organization repositories</label>
+        </div>
+        <div>
           <button class="js-save" type="submit">
             Save
           </button>

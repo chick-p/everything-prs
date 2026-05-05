@@ -11,6 +11,32 @@
   --color-button-primary-text: #f9fafb;
   --color-button-primary-background: #0a7c70;
   --color-button-primary-hover-background: #0e9a8a;
+  --color-callout-warning-background: #fffbeb;
+  --color-callout-warning-border: #f59e0b;
+  --color-callout-warning-text: #92400e;
+}
+
+.c-callout {
+  padding: 0.75rem 1rem;
+  border-radius: 0.375rem;
+  border-left: 4px solid;
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+}
+.c-callout p {
+  margin: 0 0 0.5rem;
+}
+.c-callout ul {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+.c-callout li {
+  margin-top: 0.125rem;
+}
+.c-callout--warning {
+  background-color: var(--color-callout-warning-background);
+  border-color: var(--color-callout-warning-border);
+  color: var(--color-callout-warning-text);
 }
 
 html {
@@ -229,6 +255,9 @@ legend {
     --color-button-primary-text: #f9fafb;
     --color-button-primary-background: #1a7469;
     --color-button-primary-hover-background: #208c80;
+    --color-callout-warning-background: #2d2008;
+    --color-callout-warning-border: #d97706;
+    --color-callout-warning-text: #fcd34d;
   }
   .c-main-content__loading-icon {
     color: #eee;
