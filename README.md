@@ -8,12 +8,12 @@ Rename `wrangler.toml.example` to `wrangler.toml`.
 
 Use a [fine-grained token](https://github.com/settings/tokens?type=beta) with the following repository permissions:
 
-| Permission | Access |
-|-----------|--------|
-| Metadata | Read (auto-granted) |
-| Contents | Read |
-| Pull requests | Read |
-| Commit statuses | Read |
+| Permission      | Access              |
+| --------------- | ------------------- |
+| Metadata        | Read (auto-granted) |
+| Contents        | Read                |
+| Pull requests   | Read                |
+| Commit statuses | Read                |
 
 > [!NOTE]
 > Organization repositories are excluded by default. You can include them by enabling

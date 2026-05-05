@@ -104,7 +104,10 @@ export const PullRequestHtml = async (props: {
       : "";
 
   if (allContent.length === 0) {
-    return html`<div>${callout}<div>No pull requests</div></div>`;
+    return html`<div>
+      ${callout}
+      <div>No pull requests</div>
+    </div>`;
   }
   return html`<div>
     ${callout}
