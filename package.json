@@ -1,5 +1,6 @@
 {
   "name": "everything-prs",
+  "packageManager": "pnpm@11.9.0",
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy --minify",
