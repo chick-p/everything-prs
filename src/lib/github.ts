@@ -13,11 +13,7 @@ export type UserData = {
 };
 
 export type CheckStatusState =
-  | "SUCCESS"
-  | "ERROR"
-  | "FAILURE"
-  | "PENDING"
-  | "EXPECTED";
+  "SUCCESS" | "ERROR" | "FAILURE" | "PENDING" | "EXPECTED";
 
 export const state: Record<CheckStatusState, string> = {
   SUCCESS: "✅",
