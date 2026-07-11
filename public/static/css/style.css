@@ -176,6 +176,12 @@ legend {
   display: block;
 }
 
+.c-preference-hint {
+  display: block;
+  margin-top: -0.25rem;
+  font-size: 0.875rem;
+}
+
 .c-repos-list {
   padding: 0;
   margin-top: 0;
