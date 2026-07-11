@@ -9,7 +9,9 @@
     "lint:eslint": "eslint \"./src/**/*.ts\"",
     "fix": "run-s fix:*",
     "fix:prettier": "prettier -w .",
-    "fix:eslint": "pnpm run lint:eslint --fix"
+    "fix:eslint": "pnpm run lint:eslint --fix",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@octokit/rest": "^22.0.1",
@@ -24,6 +26,7 @@
     "npm-run-all2": "^9.0.2",
     "prettier": "^3.9.4",
     "typescript-eslint": "^8.63.0",
+    "vitest": "^4.1.10",
     "wrangler": "^4.106.0"
   }
 }
