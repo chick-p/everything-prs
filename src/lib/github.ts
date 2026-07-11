@@ -36,6 +36,7 @@ export type PullRequest = {
     avatarUrl: string;
   };
   checkStatus: CheckStatusState | null;
+  isDraft: boolean;
 };
 
 export type ContributionsCollection = {
@@ -248,6 +249,7 @@ export class GitHub {
                 state
                 createdAt
                 updatedAt
+                isDraft
                 author {
                   login
                   avatarUrl
@@ -287,6 +289,7 @@ export class GitHub {
               state: string;
               createdAt: string;
               updatedAt: string;
+              isDraft: boolean;
               author: {
                 login: string;
                 avatarUrl: string;
