@@ -10,6 +10,7 @@
       return;
     }
     const repos = settings["repos"] || {};
+    const includeDraftPrs = settings["include-draft-prs"] || false;
 
     const result = await fetch("/prs", {
       method: "POST",
@@ -18,6 +19,7 @@
       },
       body: JSON.stringify({
         repos,
+        includeDraftPrs,
       }),
     });
     const prs = await result.text();

@@ -1,6 +1,11 @@
 import type { FC } from "hono/jsx";
 import { Layout } from "../components/Layout";
 
+const preferenceCheckboxes = [
+  { id: "include-orgs", label: "Include organization repositories" },
+  { id: "include-draft-prs", label: "Include draft pull requests" },
+];
+
 export const Settings: FC = async () => {
   return (
     <Layout title="Preference">
@@ -19,15 +24,12 @@ export const Settings: FC = async () => {
             class="js-gh-token no-margin-top"
           />
         </div>
-        <div>
-          <input
-            id="include-orgs"
-            name="include-orgs"
-            type="checkbox"
-            class="js-include-orgs"
-          />
-          <label for="include-orgs">Include organization repositories</label>
-        </div>
+        {preferenceCheckboxes.map(({ id, label }) => (
+          <div>
+            <input id={id} name={id} type="checkbox" class={`js-${id}`} />
+            <label for={id}>{label}</label>
+          </div>
+        ))}
         <div>
           <button class="js-save" type="submit">
             Save
