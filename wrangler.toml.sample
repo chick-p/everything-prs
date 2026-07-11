@@ -7,3 +7,8 @@ bucket = "./public"
 
 [vars]
 TZ = "Asia/Tokyo"
+
+# TOKEN_ENCRYPTION_KEY is a Cloudflare Workers Secret, not a var — do not commit its value.
+# Generate a base64-encoded 32-byte key with: openssl rand -base64 32
+# Register it with: wrangler secret put TOKEN_ENCRYPTION_KEY
+# For local dev, set TOKEN_ENCRYPTION_KEY=<base64 key> in .dev.vars instead.
