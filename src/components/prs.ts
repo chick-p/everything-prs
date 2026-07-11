@@ -1,7 +1,17 @@
 import { html } from "hono/html";
 
 import type { HtmlEscapedString } from "hono/utils/html";
-import { CheckStatusState, GitHub, state } from "../lib/github";
+import {
+  CheckStatusState,
+  GitHub,
+  state,
+  type PullRequest,
+} from "../lib/github";
+
+export const filterDraftPullRequests = (
+  pullRequests: PullRequest[],
+  includeDraftPrs = false,
+): PullRequest[] => pullRequests.filter((pr) => includeDraftPrs || !pr.isDraft);
 
 type PR = {
   owner: string;
@@ -35,10 +45,13 @@ const list = (props: { name: string; prs: Array<PR> }) => html`
   </section>
 `;
 
-export const PullRequestHtml = async (props: {
+export type PullRequestHtmlProps = {
   token: string;
   repos: Record<string, string>;
-}) => {
+  includeDraftPrs?: boolean;
+};
+
+export const PullRequestHtml = async (props: PullRequestHtmlProps) => {
   const token = props.token;
 
   if (Object.keys(props.repos).length === 0) {
@@ -62,7 +75,10 @@ export const PullRequestHtml = async (props: {
       await client.fetchAllPullRequests({ owner, repoName });
     const key = `${owner}/${repoName}`;
     if (hasPermissionError) permissionErrorRepos.push(key);
-    const converted = pullRequests.map((pr) => {
+    const converted = filterDraftPullRequests(
+      pullRequests,
+      props.includeDraftPrs,
+    ).map((pr) => {
       return {
         owner,
         repo: repoName,

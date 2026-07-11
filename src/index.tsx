@@ -61,7 +61,11 @@ app.post("/prs", async (c) => {
     return c.html(UNAUTHORIZED_HTML);
   }
   const body = await c.req.json();
-  const pullRequestHtml = await PullRequestHtml({ token, repos: body.repos });
+  const pullRequestHtml = await PullRequestHtml({
+    token,
+    repos: body.repos,
+    includeDraftPrs: body.includeDraftPrs,
+  });
   const contributionHtml = await TodayContributionHtml({
     token,
     tz: c.env.TZ,

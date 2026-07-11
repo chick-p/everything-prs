@@ -2,7 +2,9 @@
   window.addEventListener("DOMContentLoaded", (_) => {
     const ghTokenInput = document.querySelector(".js-gh-token");
     const ghTokenHint = document.querySelector(".js-gh-token-hint");
-    const includeOrgsInput = document.querySelector(".js-include-orgs");
+    const checkboxSettings = ["include-orgs", "include-draft-prs"].map(
+      (key) => ({ key, input: document.querySelector(`.js-${key}`) }),
+    );
 
     const localStorageKey = "everything-prs";
     const localStorageValue = localStorage.getItem(localStorageKey) || "{}";
@@ -17,9 +19,11 @@
     if (ghTokenHint) {
       ghTokenHint.classList.toggle("js-hidden", !hasExistingToken);
     }
-    if (includeOrgsInput) {
-      includeOrgsInput.checked = settings["include-orgs"] || false;
-    }
+    checkboxSettings.forEach(({ key, input }) => {
+      if (input) {
+        input.checked = settings[key] || false;
+      }
+    });
 
     async function encryptToken(token) {
       const response = await fetch("/api/token/encrypt", {
@@ -62,11 +66,16 @@
         ghToken = encrypted;
       }
 
+      const checkboxValues = checkboxSettings.reduce((acc, { key, input }) => {
+        acc[key] = input?.checked || false;
+        return acc;
+      }, {});
+
       saveSettings({
         ...settings,
         repos,
         "gh-token": ghToken,
-        "include-orgs": includeOrgsInput?.checked || false,
+        ...checkboxValues,
       });
       showSaveResult(true);
     });
