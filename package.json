@@ -21,11 +21,11 @@
     "@cloudflare/workers-types": "^5.20260708.1",
     "@eslint/js": "^10.0.1",
     "@octokit/types": "^16.0.0",
-    "eslint": "^10.6.0",
+    "eslint": "^10.7.0",
     "eslint-config-prettier": "^10.1.8",
     "npm-run-all2": "^9.0.2",
     "prettier": "^3.9.4",
-    "typescript-eslint": "^8.63.0",
+    "typescript-eslint": "^8.64.0",
     "vitest": "^4.1.10",
     "wrangler": "^4.106.0"
   }
