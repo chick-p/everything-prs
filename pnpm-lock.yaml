@@ -12,8 +12,8 @@ importers:
         specifier: ^22.0.1
         version: 22.0.1
       hono:
-        specifier: ^4.12.28
-        version: 4.12.28
+        specifier: ^4.12.30
+        version: 4.12.30
     devDependencies:
       '@cloudflare/workers-types':
         specifier: ^5.20260708.1
@@ -953,8 +953,8 @@ packages:
     resolution: {integrity: sha512-XxwI8EOhVQgWp6iDL+3b0r86f4d6AX6zSU55HfB4ydCEuXLXc5FcYeOu+nnGftS4TEju/11rt4KJPTMgbfmv4A==}
     engines: {node: '>=10.13.0'}
 
-  hono@4.12.28:
-    resolution: {integrity: sha512-YwUvVpSF7m1yOblFPrU3Hbo8XhPheBoiyfGuII6z19LnOr6JpDnyyp7LFNrfV56wS8tpvtBFGRISHN02pDdLOA==}
+  hono@4.12.30:
+    resolution: {integrity: sha512-emn+JoJjrN9YTpRDS5it/UI2SO9BAE37T6I3d963RxcZ81G9A4pr2SZTEiiaiKbzx+NKRg5BZ89fCL7gCJCUog==}
     engines: {node: '>=16.9.0'}
 
   ignore@5.3.2:
@@ -2191,7 +2191,7 @@ snapshots:
     dependencies:
       is-glob: 4.0.3
 
-  hono@4.12.28: {}
+  hono@4.12.30: {}
 
   ignore@5.3.2: {}
 
