@@ -21,7 +21,7 @@
     "@cloudflare/workers-types": "^5.20260721.1",
     "@eslint/js": "^10.0.1",
     "@octokit/types": "^16.0.0",
-    "eslint": "^10.7.0",
+    "eslint": "^10.8.0",
     "eslint-config-prettier": "^10.1.8",
     "npm-run-all2": "^9.0.2",
     "prettier": "^3.9.6",
