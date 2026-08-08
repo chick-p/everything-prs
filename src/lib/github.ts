@@ -132,7 +132,7 @@ export class GitHub {
       const query = `
         query getWatchedRepos($perPage: Int!, $cursor: String) {
           viewer {
-            watching(first: $perPage, after: $cursor) {
+            watching(first: $perPage, after: $cursor, orderBy: {field: NAME, direction: ASC}) {
               pageInfo {
                 hasNextPage
                 endCursor
