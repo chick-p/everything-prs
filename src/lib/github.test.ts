@@ -62,6 +62,28 @@ describe("GitHub#fetchRepos", () => {
     ]);
   });
 
+  it("reports hasPermissionError when the API returns FORBIDDEN errors", async () => {
+    vi.spyOn(global, "fetch").mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        data: {
+          viewer: {
+            watching: {
+              pageInfo: { hasNextPage: false, endCursor: null },
+              nodes: [],
+            },
+          },
+        },
+        errors: [{ type: "FORBIDDEN", message: "Resource not accessible" }],
+      }),
+    } as Response);
+
+    const client = new GitHub({ token: "test-token" });
+    const result = await client.fetchRepos();
+
+    expect(result.hasPermissionError).toBe(true);
+  });
+
   it("reports hasError instead of silently ending pagination on failure", async () => {
     vi.spyOn(global, "fetch").mockRejectedValue(new Error("network down"));
     vi.spyOn(console, "error").mockImplementation(() => {});
@@ -111,5 +133,27 @@ describe("GitHub#fetchAllRepos", () => {
 
     expect(result.repositories).toHaveLength(1);
     expect(result.hasError).toBe(true);
+  });
+
+  it("propagates hasPermissionError from any page", async () => {
+    vi.spyOn(global, "fetch").mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        data: {
+          viewer: {
+            watching: {
+              pageInfo: { hasNextPage: false, endCursor: null },
+              nodes: [],
+            },
+          },
+        },
+        errors: [{ type: "FORBIDDEN", message: "Resource not accessible" }],
+      }),
+    } as Response);
+
+    const client = new GitHub({ token: "test-token" });
+    const result = await client.fetchAllRepos();
+
+    expect(result.hasPermissionError).toBe(true);
   });
 });

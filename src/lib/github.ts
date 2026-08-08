@@ -128,6 +128,7 @@ export class GitHub {
     hasNextPage: boolean;
     endCursor: string | null;
     hasError: boolean;
+    hasPermissionError: boolean;
   }> {
     try {
       const query = `
@@ -157,7 +158,7 @@ export class GitHub {
         cursor,
       };
 
-      const { data } = await this.sendQuery<{
+      const { data, hasForbiddenErrors } = await this.sendQuery<{
         viewer: {
           watching: {
             pageInfo: { hasNextPage: boolean; endCursor: string | null };
@@ -189,6 +190,7 @@ export class GitHub {
         hasNextPage: data.viewer.watching.pageInfo.hasNextPage,
         endCursor: data.viewer.watching.pageInfo.endCursor,
         hasError: false,
+        hasPermissionError: hasForbiddenErrors,
       };
     } catch (error) {
       console.error("Error fetching watched repositories:", error);
@@ -197,6 +199,7 @@ export class GitHub {
         hasNextPage: false,
         endCursor: null,
         hasError: true,
+        hasPermissionError: false,
       };
     }
   }
@@ -206,11 +209,13 @@ export class GitHub {
   }: { includeOrgs?: boolean } = {}): Promise<{
     repositories: Repository[];
     hasError: boolean;
+    hasPermissionError: boolean;
   }> {
     let allRepositories: Repository[] = [];
     let hasNextPage = true;
     let endCursor: string | null = null;
     let hasError = false;
+    let hasPermissionError = false;
 
     while (hasNextPage) {
       const result = await this.fetchRepos(endCursor, 100, includeOrgs);
@@ -218,13 +223,14 @@ export class GitHub {
       hasNextPage = result.hasNextPage;
       endCursor = result.endCursor;
       if (result.hasError) hasError = true;
+      if (result.hasPermissionError) hasPermissionError = true;
 
       if (!endCursor) {
         break;
       }
     }
 
-    return { repositories: allRepositories, hasError };
+    return { repositories: allRepositories, hasError, hasPermissionError };
   }
 
   async fetchPullRequests({

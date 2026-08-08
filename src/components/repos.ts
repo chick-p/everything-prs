@@ -21,8 +21,22 @@ const repoItem = (props: { repo: string }) => {
   </li>`;
 };
 
-const content = (props: { repository: Array<Owner> }) => html`
+const content = (props: {
+  repository: Array<Owner>;
+  hasPermissionError: boolean;
+}) => html`
   <div>
+    ${
+      props.hasPermissionError
+        ? html`<div class="c-callout c-callout--warning">
+            <p>
+              Some watched repositories could not be loaded due to insufficient
+              token permissions. Please check your token's
+              <strong>Contents: Read</strong> access.
+            </p>
+          </div>`
+        : ""
+    }
     ${props.repository.map((owner) => {
       return html`<section>
         <fieldset>
@@ -57,7 +71,9 @@ export const repositoryHtml = async (props: {
   const { token, includeOrgs = false } = props;
 
   const client = new GitHub({ token });
-  const { repositories } = await client.fetchAllRepos({ includeOrgs });
+  const { repositories, hasPermissionError } = await client.fetchAllRepos({
+    includeOrgs,
+  });
 
   const tree = repositories
     .filter((repo) => !repo.archived)
@@ -83,5 +99,5 @@ export const repositoryHtml = async (props: {
       return owner;
     });
 
-  return content({ repository: repos });
+  return content({ repository: repos, hasPermissionError });
 };
