@@ -127,6 +127,7 @@ export class GitHub {
     repositories: Repository[];
     hasNextPage: boolean;
     endCursor: string | null;
+    hasError: boolean;
   }> {
     try {
       const query = `
@@ -187,6 +188,7 @@ export class GitHub {
         repositories,
         hasNextPage: data.viewer.watching.pageInfo.hasNextPage,
         endCursor: data.viewer.watching.pageInfo.endCursor,
+        hasError: false,
       };
     } catch (error) {
       console.error("Error fetching watched repositories:", error);
@@ -194,29 +196,35 @@ export class GitHub {
         repositories: [],
         hasNextPage: false,
         endCursor: null,
+        hasError: true,
       };
     }
   }
 
   async fetchAllRepos({
     includeOrgs = false,
-  }: { includeOrgs?: boolean } = {}): Promise<Repository[]> {
+  }: { includeOrgs?: boolean } = {}): Promise<{
+    repositories: Repository[];
+    hasError: boolean;
+  }> {
     let allRepositories: Repository[] = [];
     let hasNextPage = true;
     let endCursor: string | null = null;
+    let hasError = false;
 
     while (hasNextPage) {
       const result = await this.fetchRepos(endCursor, 100, includeOrgs);
       allRepositories = [...allRepositories, ...result.repositories];
       hasNextPage = result.hasNextPage;
       endCursor = result.endCursor;
+      if (result.hasError) hasError = true;
 
       if (!endCursor) {
         break;
       }
     }
 
-    return allRepositories;
+    return { repositories: allRepositories, hasError };
   }
 
   async fetchPullRequests({

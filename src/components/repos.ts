@@ -57,9 +57,9 @@ export const repositoryHtml = async (props: {
   const { token, includeOrgs = false } = props;
 
   const client = new GitHub({ token });
-  const results = await client.fetchAllRepos({ includeOrgs });
+  const { repositories } = await client.fetchAllRepos({ includeOrgs });
 
-  const tree = results
+  const tree = repositories
     .filter((repo) => !repo.archived)
     .reduce((acc: Array<Owner>, repo) => {
       const owner = findOwner(repo.owner, acc);
