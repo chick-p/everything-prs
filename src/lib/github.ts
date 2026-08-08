@@ -161,7 +161,11 @@ export class GitHub {
           watching: {
             pageInfo: { hasNextPage: boolean; endCursor: string | null };
             nodes: Array<{
-              owner: { login: string; avatarUrl: string; __typename: string };
+              owner: {
+                login: string;
+                avatarUrl: string;
+                __typename: string;
+              } | null;
               name: string;
               isArchived: boolean;
             }>;
@@ -170,6 +174,7 @@ export class GitHub {
       }>(query, variables);
 
       const repositories = data.viewer.watching.nodes
+        .filter((repo) => repo.owner !== null)
         .filter((repo) => includeOrgs || repo.owner.__typename === "User")
         .map((repo) => ({
           owner: repo.owner.login,
